@@ -1,33 +1,35 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game
 {
-    public class Enemy : MonoBehaviour, IDamaging
+    public class Enemy : DamagingObject, IDamaging
     {
-        [SerializeField] float maxHealth = 50;
+        [Header("Enemy")]
 		[SerializeField] float damage = 100;
 		[SerializeField] int killBonus = 10;
-        
-        float health;
 
-        public float Health => health;
+        [Header("UI")]
+        [SerializeField] GameObject ui;
+        [SerializeField] Image healthBar;
+        
 		public int KillBonus => killBonus;
 
-        public event System.Action onDeath;
-
-        protected void Awake()
+        public override void DealDamage(float damage)
         {
-            health = maxHealth;
+            base.DealDamage(damage);
+
+            if (!IsDead && healthBar != null)
+            {
+                healthBar.fillAmount = Health / maxHealth;
+            }
         }
 
-        public void DealDamage(float damage)
+        public override void Death()
         {
+            base.Death();
 
-        }
-
-        public void Death()
-        {
-            onDeath?.Invoke();
+            ui?.SetActive(false);
         }
     }
 }

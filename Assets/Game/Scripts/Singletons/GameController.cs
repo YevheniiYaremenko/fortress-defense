@@ -19,11 +19,10 @@ namespace Game
 
         [Header("Scene")]
         [SerializeField] Transform rightLevelBorder;
+        [SerializeField] Fortress fortress;
 
         [Header("Game")]
         [SerializeField] int enemiesCount = 10;
-        [SerializeField] float startHealth = 1000;
-        float health;
         int killedEnemies = 0;
 
         private void Awake()
@@ -68,13 +67,7 @@ namespace Game
 
         private void Update()
         {
-            gameScreen.SetData(health / startHealth, 0, 1 - killedEnemies / (float)enemiesCount);
-
-            if (health <= 0)
-            {
-                Lose();
-                return;
-            }
+            gameScreen.SetData(fortress.HealthFraction, 0, 1 - killedEnemies / (float)enemiesCount);
 
             if (killedEnemies >= enemiesCount)
             {
@@ -121,7 +114,7 @@ namespace Game
         
         void StartGame()
         {
-            health = startHealth;
+            fortress.onDeath += Lose;
             Spawner.EnemyZoneSpawner.Instance.SetData(null, (enemy) => { killedEnemies++; } );
             Spawner.EnemyZoneSpawner.Instance.Spawning = true;
             ShowScreen(gameScreen);
