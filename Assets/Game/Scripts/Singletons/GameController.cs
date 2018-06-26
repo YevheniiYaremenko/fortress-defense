@@ -59,7 +59,7 @@ namespace Game
             camera.transform.position = new Vector3(
                 rightLevelBorder.position.x - camera.orthographicSize * camera.aspect,
                 0,
-                -2
+                -5
             );
 
             StartGame();
@@ -122,11 +122,13 @@ namespace Game
 
         void Win()
         {
+            Spawner.EnemyZoneSpawner.Instance.Reset();
             ShowScreen(winScreen);
         }
 
         void Lose()
         {
+            Spawner.EnemyZoneSpawner.Instance.Reset();
             ShowScreen(loseScreen);
         }
 

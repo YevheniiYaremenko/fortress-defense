@@ -9,6 +9,7 @@ namespace Game
         [SerializeField] protected float maxHealth = 100;
 
         public float Health { get; private set; }
+        public float HealthFraction => Health / maxHealth;
         public bool IsDead => Health <= 0;
 
         public event System.Action onDeath;

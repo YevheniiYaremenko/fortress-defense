@@ -68,6 +68,7 @@ namespace Game.Spawner
         public void Reset()
         {
             spawnPool.ForEach(x => Destroy(x.gameObject));
+			spawning = false;
         }
 
         ///<summary>

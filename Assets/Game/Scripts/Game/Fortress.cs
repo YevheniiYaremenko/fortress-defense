@@ -10,9 +10,6 @@ namespace Game
         [SerializeField] Sprite[] sprites;
         [SerializeField] Sprite deathSprite;
         SpriteRenderer spriteRenderer;
-
-		public float HealthFraction => Health / maxHealth;
-
 		protected override void Awake()
 		{
 			base.Awake();
@@ -22,11 +19,18 @@ namespace Game
         public override void DealDamage(float damage)
         {
             base.DealDamage(damage);
-
             if (!IsDead && sprites.Length > 0)
             {
-                spriteRenderer.sprite = sprites[Mathf.Min(sprites.Length - 1, (int)(HealthFraction / maxHealth * sprites.Length))];
+                spriteRenderer.sprite = sprites[
+					Mathf.Min(sprites.Length - 1, 
+					(int)((1 - HealthFraction) * sprites.Length))];
             }
         }
+
+		public override void Death()
+		{
+			base.Death();
+			spriteRenderer.sprite = deathSprite;
+		}
     }
 }
