@@ -14,7 +14,7 @@ namespace Game
         Vector3 attackPosition;
 
         [Header("Movement")]
-        [SerializeField] Vector3 moveDirection = Vector3.right;
+        [SerializeField] protected Vector3 moveDirection = Vector3.right;
         [SerializeField] float moveSpeed = 1;
 
         [Header("UI")]
