@@ -17,6 +17,15 @@ namespace Game
         Stack<UI.Screen> screenHistory;
         UI.Screen currentScreen;
 
+        [Header("Scene")]
+        [SerializeField] Transform rightLevelBorder;
+
+        [Header("Game")]
+        [SerializeField] int enemiesCount = 10;
+        [SerializeField] float startHealth = 1000;
+        float health;
+        int killedEnemies = 0;
+
         private void Awake()
         {
             screens = new List<UI.Screen>()
@@ -47,7 +56,31 @@ namespace Game
             helpScreen.Init(BackScreen);
             shopScreen.Init(BackScreen);
 
-            ShowScreen(gameScreen);
+            var camera = Camera.main;
+            camera.transform.position = new Vector3(
+                rightLevelBorder.position.x - camera.orthographicSize * camera.aspect,
+                0,
+                -2
+            );
+
+            StartGame();
+        }
+
+        private void Update()
+        {
+            gameScreen.SetData(health / startHealth, 0, 1 - killedEnemies / (float)enemiesCount);
+
+            if (health <= 0)
+            {
+                Lose();
+                return;
+            }
+
+            if (killedEnemies >= enemiesCount)
+            {
+                Win();
+                return;
+            }
         }
 
         #region Scene Navigation
@@ -80,6 +113,28 @@ namespace Game
                 screenHistory.Pop();
                 ShowScreen(screenHistory.Pop());
             }
+        }
+
+        #endregion
+
+        #region Game
+        
+        void StartGame()
+        {
+            health = startHealth;
+            Spawner.EnemyZoneSpawner.Instance.SetData(null, (enemy) => { killedEnemies++; } );
+            Spawner.EnemyZoneSpawner.Instance.Spawning = true;
+            ShowScreen(gameScreen);
+        }
+
+        void Win()
+        {
+            ShowScreen(winScreen);
+        }
+
+        void Lose()
+        {
+            ShowScreen(loseScreen);
         }
 
         #endregion
