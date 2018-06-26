@@ -13,6 +13,7 @@ namespace Game
         [SerializeField] UI.LoseScreen loseScreen;
         [SerializeField] UI.HelpScreen helpScreen;
         [SerializeField] UI.ShopScreen shopScreen;
+        [SerializeField] UI.UnitsShopScreen unitsShopScreen;
         List<UI.Screen> screens;
         Stack<UI.Screen> screenHistory;
         UI.Screen currentScreen;
@@ -22,8 +23,15 @@ namespace Game
         [SerializeField] Fortress fortress;
 
         [Header("Game")]
-        [SerializeField] int enemiesCount = 10;
-        int killedEnemies = 0;
+        [SerializeField] int startCoins = 1000;
+        [SerializeField] float levelTime = 120;
+        int kills = 0;
+        int coins = 0;
+        int score = 0;
+        float timer;
+
+        [Header("Units")]
+        [SerializeField] Unit[] units;
 
         private void Awake()
         {
@@ -36,6 +44,7 @@ namespace Game
                 loseScreen,
                 helpScreen,
                 shopScreen,
+                unitsShopScreen,
             };
             screenHistory = new Stack<UI.Screen>();
         }
@@ -45,6 +54,7 @@ namespace Game
             gameScreen.Init(
                 () => ShowScreen(pauseScreen),
                 () => ShowScreen(settingsScreen),
+                () => ShowScreen(unitsShopScreen),
                 () => ShowScreen(helpScreen),
                 () => ShowScreen(shopScreen)
                 );
@@ -54,6 +64,7 @@ namespace Game
             loseScreen.Init(LoadGame, LoadMenu);
             helpScreen.Init(BackScreen);
             shopScreen.Init(BackScreen);
+            unitsShopScreen.Init(units, BuyUnit, BackScreen);
 
             var camera = Camera.main;
             camera.transform.position = new Vector3(
@@ -67,9 +78,12 @@ namespace Game
 
         private void Update()
         {
-            gameScreen.SetData(fortress.HealthFraction, 0, 1 - killedEnemies / (float)enemiesCount);
+            timer -= Time.deltaTime;
 
-            if (killedEnemies >= enemiesCount)
+            gameScreen.SetData(fortress.HealthFraction, score, timer, kills, coins);
+            unitsShopScreen.SetData(coins);
+
+            if (timer <= 0)
             {
                 Win();
                 return;
@@ -115,8 +129,10 @@ namespace Game
         void StartGame()
         {
             fortress.onDeath += Lose;
-            Spawner.EnemyZoneSpawner.Instance.SetData(null, (enemy) => { killedEnemies++; } );
+            Spawner.EnemyZoneSpawner.Instance.SetData(null, (enemy) => { kills++; } );
             Spawner.EnemyZoneSpawner.Instance.Spawning = true;
+            timer = levelTime;
+            coins = startCoins;
             ShowScreen(gameScreen);
         }
 
@@ -130,6 +146,15 @@ namespace Game
         {
             Spawner.EnemyZoneSpawner.Instance.Reset();
             ShowScreen(loseScreen);
+        }
+
+        #endregion
+
+        #region Units
+
+        void BuyUnit(Unit unit)
+        {
+            //TODO
         }
 
         #endregion

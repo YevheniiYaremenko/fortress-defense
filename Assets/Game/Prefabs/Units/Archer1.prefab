@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4694853186765794}
+  - component: {fileID: 114453560191118268}
   - component: {fileID: 212424713012232788}
   - component: {fileID: 95353743608112082}
   m_Layer: 0
@@ -59,6 +60,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114453560191118268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1269873324848460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d768cc9d394ee4c53bdb96dbe88a59ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 793b4abdeb875924482a9ad3fa9794be, type: 3}
+  price: 300
 --- !u!212 &212424713012232788
 SpriteRenderer:
   m_ObjectHideFlags: 1

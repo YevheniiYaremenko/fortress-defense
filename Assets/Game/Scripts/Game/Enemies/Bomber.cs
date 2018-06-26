@@ -36,7 +36,7 @@ namespace Game
                 ((Vector2)throwPoint.position + endPosition) / 2f + Vector2.up,
                 endPosition
             };
-            yield return bomb.transform.DOPath(points, .5f).SetEase(Ease.Linear).WaitForCompletion();
+            yield return bomb.transform.DOPath(points, .3f).SetEase(Ease.Linear).WaitForCompletion();
 
             Destroy(bomb);
 

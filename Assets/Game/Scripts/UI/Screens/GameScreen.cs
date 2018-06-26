@@ -6,12 +6,15 @@ namespace Game.UI
     public class GameScreen : Screen
     {
         [SerializeField] Image healthBar;
-        [SerializeField] Image scoreBar;
-        [SerializeField] Image enemiesBar;
+        [SerializeField] Text timeText;
+        [SerializeField] Text scoreText;
+        [SerializeField] Text killsText;
+        [SerializeField] Text coinsText;
 
         public void Init(
             System.Action onPause,
             System.Action onSettings,
+            System.Action onUnitsShop,
             System.Action onHelp,
             System.Action onShop)
         {
@@ -19,13 +22,16 @@ namespace Game.UI
             this.onSettings = onSettings;
             this.onHelp = onHelp;
             this.onShop = onShop;
+            this.onUnitsShop = onUnitsShop;
         }
 
-        public void SetData(float healthValue, float scoreValue, float enemyValue)
+        public void SetData(float healthValue, int score, float time, int kills, int coins)
         {
             healthBar.fillAmount = healthValue;
-            scoreBar.fillAmount = scoreValue;
-            enemiesBar.fillAmount = enemyValue;
+            scoreText.text = score.ToString();
+            timeText.text = TimeHelper.GetTime((int)time);
+            killsText.text = kills.ToString();
+            coinsText.text = coins.ToString();
         }
 
         System.Action onPause;
@@ -39,5 +45,8 @@ namespace Game.UI
 
         System.Action onShop;
         public void Shop() => onShop?.Invoke();
+
+        System.Action onUnitsShop;
+        public void UnitsShop() => onUnitsShop?.Invoke();
     }
 }
