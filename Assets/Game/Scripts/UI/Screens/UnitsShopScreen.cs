@@ -23,11 +23,11 @@ namespace Game.UI
             }
         }
 
-        public void SetData(int coins)
+        public void SetData(int coins, bool canPlaceUnit)
         {
             foreach(var item in items)
             {
-                item.SetData(coins);
+                item.SetData(coins, canPlaceUnit);
             }
         }
 

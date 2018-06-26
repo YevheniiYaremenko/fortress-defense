@@ -9,6 +9,8 @@ namespace Game.UI
 		[SerializeField] Image iconView;
 		[SerializeField] Text priceText;
         [SerializeField] Button button;
+		[SerializeField] Image buttonView;
+		[SerializeField] Color disableColor = new Color(.5f, .5f, .5f, .5f);
 		int price;
 
 		void Awake()
@@ -24,9 +26,12 @@ namespace Game.UI
 			this.onBuy = onBuy;
 		}
 
-		public void SetData(int coins)
+		public void SetData(int coins, bool canPlaceUnit)
 		{
-			button.interactable = price <= coins;
+			bool canBuy = price <= coins && canPlaceUnit;
+			button.interactable = canBuy;
+            buttonView.color = canBuy ? Color.white : disableColor;
+            iconView.color = canBuy ? Color.white : disableColor;
 		}
 
 		System.Action onBuy;

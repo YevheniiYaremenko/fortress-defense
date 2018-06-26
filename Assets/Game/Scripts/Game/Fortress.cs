@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Game
 {
@@ -10,6 +11,12 @@ namespace Game
         [SerializeField] Sprite[] sprites;
         [SerializeField] Sprite deathSprite;
         SpriteRenderer spriteRenderer;
+
+		[Header("Unit placements")]
+		[SerializeField] List<UnitPlacement> unitPlacements;
+
+		public bool CanPlaceUnit => unitPlacements.Any(p => !p.IsBusy);
+
 		protected override void Awake()
 		{
 			base.Awake();
@@ -32,5 +39,8 @@ namespace Game
 			base.Death();
 			spriteRenderer.sprite = deathSprite;
 		}
+
+        public void HighlightUnitPlacements(System.Action<UnitPlacement> onSelect) => unitPlacements.ForEach(p => p.Highlight(onSelect));
+        public void UnhighlightUnitPlacements() => unitPlacements.ForEach(p => p.Unhighlight());
     }
 }

@@ -14,6 +14,7 @@ namespace Game
         [SerializeField] UI.HelpScreen helpScreen;
         [SerializeField] UI.ShopScreen shopScreen;
         [SerializeField] UI.UnitsShopScreen unitsShopScreen;
+        [SerializeField] UI.Screen unitPlacementScreen;
         List<UI.Screen> screens;
         Stack<UI.Screen> screenHistory;
         UI.Screen currentScreen;
@@ -31,7 +32,7 @@ namespace Game
         float timer;
 
         [Header("Units")]
-        [SerializeField] Unit[] units;
+        [SerializeField] Unit[] unitPrefabs;
 
         private void Awake()
         {
@@ -45,6 +46,7 @@ namespace Game
                 helpScreen,
                 shopScreen,
                 unitsShopScreen,
+                unitPlacementScreen,
             };
             screenHistory = new Stack<UI.Screen>();
         }
@@ -64,7 +66,7 @@ namespace Game
             loseScreen.Init(LoadGame, LoadMenu);
             helpScreen.Init(BackScreen);
             shopScreen.Init(BackScreen);
-            unitsShopScreen.Init(units, BuyUnit, BackScreen);
+            unitsShopScreen.Init(unitPrefabs, BuyUnit, BackScreen);
 
             var camera = Camera.main;
             camera.transform.position = new Vector3(
@@ -81,7 +83,7 @@ namespace Game
             timer -= Time.deltaTime;
 
             gameScreen.SetData(fortress.HealthFraction, score, timer, kills, coins);
-            unitsShopScreen.SetData(coins);
+            unitsShopScreen.SetData(coins, fortress.CanPlaceUnit);
 
             if (timer <= 0)
             {
@@ -154,7 +156,14 @@ namespace Game
 
         void BuyUnit(Unit unit)
         {
-            //TODO
+            coins -= unit.Price;
+            ShowScreen(unitPlacementScreen);
+            fortress.HighlightUnitPlacements((placement) => 
+            {
+                placement.SetUnit(Instantiate(unit));
+                fortress.UnhighlightUnitPlacements();
+                ShowScreen(gameScreen);
+            });
         }
 
         #endregion
