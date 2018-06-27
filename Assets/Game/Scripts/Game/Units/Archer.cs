@@ -48,6 +48,7 @@ namespace Game
 
         IEnumerator AttackCoroutine()
         {
+			var target = selectedEnemy;
             var arrow = Instantiate(arrowPrefab, shotPoint.position, shotPoint.rotation);
 			var center = (Vector2)(selectedEnemy.AimPoint.position + shotPoint.position) / 2f;
             var points = new Vector3[]
@@ -61,7 +62,10 @@ namespace Game
             
 			Destroy(arrow);
 
-            selectedEnemy?.DealDamage(damage);
+			if (target == selectedEnemy)
+			{
+                selectedEnemy?.DealDamage(damage);
+			}
         }
     }
 }

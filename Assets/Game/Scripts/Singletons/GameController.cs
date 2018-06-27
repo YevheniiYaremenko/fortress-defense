@@ -83,6 +83,11 @@ namespace Game
 
         private void Update()
         {
+            if (timer <= 0)
+            {
+                return;
+            }
+
             timer -= Time.deltaTime;
 
             gameScreen.SetData(fortress.HealthFraction, score, timer, kills, coins);
@@ -91,7 +96,6 @@ namespace Game
             if (timer <= 0)
             {
                 Win();
-                return;
             }
         }
 
@@ -143,6 +147,8 @@ namespace Game
                 (enemy) => 
                 { 
                     kills++;
+                    coins += enemy.KillBonus;
+                    score += enemy.KillBonus;
                     enemies.Remove(enemy);
                     NotifyUnitsAboutEnemies();
                 });
@@ -152,6 +158,13 @@ namespace Game
             ShowScreen(gameScreen);
         }
 
+        void ResetGame()
+        {
+            Spawner.EnemyZoneSpawner.Instance.Spawning = false;
+            units.ForEach(u => { if (u != null) Destroy(u.gameObject); });
+            enemies.ForEach(e => { if (e != null) Destroy(e.gameObject); });
+        }
+
         void NotifyUnitsAboutEnemies()
         {
             units.ForEach(u => u.SetEnemies(enemies));
@@ -159,13 +172,13 @@ namespace Game
 
         void Win()
         {
-            Spawner.EnemyZoneSpawner.Instance.Reset();
+            ResetGame();
             ShowScreen(winScreen);
         }
 
         void Lose()
         {
-            Spawner.EnemyZoneSpawner.Instance.Reset();
+            ResetGame();
             ShowScreen(loseScreen);
         }
 
@@ -181,6 +194,8 @@ namespace Game
             fortress.HighlightUnitPlacements((placement) => 
             {
                 var unitInstance = Instantiate(unit);
+                unitInstance.SetEnemies(enemies);
+
                 units.Add(unitInstance);
                 placement.SetUnit(unitInstance);
                 fortress.UnhighlightUnitPlacements();

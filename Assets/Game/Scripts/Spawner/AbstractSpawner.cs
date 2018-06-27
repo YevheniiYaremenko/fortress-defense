@@ -67,8 +67,8 @@ namespace Game.Spawner
         ///</summary>
         public void Reset()
         {
+            spawnPool = spawnPool.Where(x => x != null).ToList();
             spawnPool.ForEach(x => Destroy(x.gameObject));
-			spawning = false;
         }
 
         ///<summary>

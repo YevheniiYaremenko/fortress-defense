@@ -9,7 +9,6 @@ namespace Game
 		[SerializeField] string menuScene = "Menu";
         [SerializeField] string gameScene = "Game";
 
-        private void Awake() => LoadMenu();
         public void QuitApplication() => Application.Quit();
         public void LoadMenu(System.Action onLoaded = null) => LoadScene(menuScene, onLoaded);
         public void LoadGame(System.Action onLoaded = null) => LoadScene(gameScene, onLoaded);
