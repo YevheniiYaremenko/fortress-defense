@@ -5382,9 +5382,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minSpawnInstancesCount: 1
-  maxSpawnInstancesCount: 5
+  maxSpawnInstancesCount: 7
   minSpawnPeriod: 1
-  maxSpawnPeriod: 10
+  maxSpawnPeriod: 5
   spawning: 0
   spawnZone: {fileID: 1943437122}
 --- !u!114 &1099780925
@@ -6608,7 +6608,7 @@ MonoBehaviour:
   rightLevelBorder: {fileID: 656740997}
   fortress: {fileID: 808456400}
   startCoins: 600
-  levelTime: 60
+  levelTime: 180
   unitPrefabs:
   - {fileID: 114441813257280418, guid: 2810284526eaad6478b8e9f88556d205, type: 2}
   - {fileID: 114413866979646208, guid: afa1ad10b570ee04eb5048f8a809350d, type: 2}
