@@ -9,6 +9,7 @@ namespace Game
 		[SerializeField] float damage = 100;
         [SerializeField] float attackDistance = 1;
 		[SerializeField] int killBonus = 10;
+        [SerializeField] Transform aimPoint;
         Animator animator;
         Fortress fortress;
         Vector3 attackPosition;
@@ -21,6 +22,7 @@ namespace Game
         [SerializeField] GameObject ui;
         [SerializeField] Image healthBar;
         
+        public Transform AimPoint => aimPoint;
 		public int KillBonus => killBonus;
         protected bool CanAttack => Vector2.Distance(attackPosition, transform.position) <= attackDistance;
 
@@ -35,6 +37,11 @@ namespace Game
 
         void Update()
         {
+            if (IsDead)
+            {
+                return;
+            }
+            
             if (Vector2.Distance(attackPosition, transform.position) > attackDistance)
             {
                 animator.SetBool("Move", true);
@@ -53,6 +60,11 @@ namespace Game
             {
                 fortress.DealDamage(damage);
             }
+        }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
         }
 
         public override void DealDamage(float damage)

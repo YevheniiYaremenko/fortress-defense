@@ -35,8 +35,6 @@ namespace Game
 
         public virtual void Death()
         {
-            GetComponent<Collider2D>().enabled = false;
-            Destroy(this);
             onDeath?.Invoke();
         }
     }

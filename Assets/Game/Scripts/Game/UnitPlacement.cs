@@ -21,6 +21,11 @@ namespace Game
 			removeUnitButton.SetActive(!highlight && IsBusy);
 		}
 
+		public void Init(System.Action<Unit> onUnitRemove)
+		{
+			this.onUnitRemove = onUnitRemove;
+		}
+
 		public void SetUnit(Unit unit)
 		{
 			if (IsBusy)
@@ -52,11 +57,13 @@ namespace Game
 			onSelect?.Invoke(this);
 		}
 
+        System.Action<Unit> onUnitRemove;
 		public void RemoveUnit()
 		{
 			if (IsBusy)
 			{
 				Destroy(unit.gameObject);
+                onUnitRemove?.Invoke(unit);
 			}
 		}
     }

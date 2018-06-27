@@ -23,6 +23,11 @@ namespace Game
             spriteRenderer = GetComponent<SpriteRenderer>();
 		}
 
+		public void Init(System.Action<Unit> onRemove, System.Action onDestroy)
+		{
+			onDeath += onDestroy;
+		}
+
         public override void DealDamage(float damage)
         {
             base.DealDamage(damage);
@@ -37,6 +42,7 @@ namespace Game
 		public override void Death()
 		{
 			base.Death();
+			Destroy(this);
 			spriteRenderer.sprite = deathSprite;
 		}
 

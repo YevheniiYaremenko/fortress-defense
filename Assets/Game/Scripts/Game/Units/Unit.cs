@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game
 {
-    public class Unit : MonoBehaviour
+    public abstract class Unit : MonoBehaviour
     {
 		[Header("View")]
 		[SerializeField] Sprite icon;
@@ -12,5 +12,12 @@ namespace Game
 
 		public Sprite Icon => icon;
 		public int Price => price;
+
+        protected List<Enemy> enemies = new List<Enemy>();
+
+        public void SetEnemies(List<Enemy> enemies)
+		{
+			this.enemies = enemies;
+		}
     }
 }

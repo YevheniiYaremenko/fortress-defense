@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Game
 {
@@ -33,6 +34,8 @@ namespace Game
 
         [Header("Units")]
         [SerializeField] Unit[] unitPrefabs;
+        List<Unit> units = new List<Unit>();
+        List<Enemy> enemies = new List<Enemy>();
 
         private void Awake()
         {
@@ -130,12 +133,28 @@ namespace Game
         
         void StartGame()
         {
-            fortress.onDeath += Lose;
-            Spawner.EnemyZoneSpawner.Instance.SetData(null, (enemy) => { kills++; } );
+            fortress.Init((unit) => units.Remove(unit), Lose);
+            Spawner.EnemyZoneSpawner.Instance.SetData(
+                (enemy) => 
+                {
+                    enemies.Add(enemy);
+                    NotifyUnitsAboutEnemies();
+                },
+                (enemy) => 
+                { 
+                    kills++;
+                    enemies.Remove(enemy);
+                    NotifyUnitsAboutEnemies();
+                });
             Spawner.EnemyZoneSpawner.Instance.Spawning = true;
             timer = levelTime;
             coins = startCoins;
             ShowScreen(gameScreen);
+        }
+
+        void NotifyUnitsAboutEnemies()
+        {
+            units.ForEach(u => u.SetEnemies(enemies));
         }
 
         void Win()
@@ -158,9 +177,12 @@ namespace Game
         {
             coins -= unit.Price;
             ShowScreen(unitPlacementScreen);
+            
             fortress.HighlightUnitPlacements((placement) => 
             {
-                placement.SetUnit(Instantiate(unit));
+                var unitInstance = Instantiate(unit);
+                units.Add(unitInstance);
+                placement.SetUnit(unitInstance);
                 fortress.UnhighlightUnitPlacements();
                 ShowScreen(gameScreen);
             });

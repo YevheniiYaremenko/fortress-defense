@@ -6532,9 +6532,9 @@ MonoBehaviour:
   startCoins: 1000
   levelTime: 120
   unitPrefabs:
-  - {fileID: 114453560191118268, guid: 2810284526eaad6478b8e9f88556d205, type: 2}
-  - {fileID: 114210858383645642, guid: afa1ad10b570ee04eb5048f8a809350d, type: 2}
-  - {fileID: 114432565118128108, guid: cb3301161a9810a488ed41477c58df31, type: 2}
+  - {fileID: 114441813257280418, guid: 2810284526eaad6478b8e9f88556d205, type: 2}
+  - {fileID: 114413866979646208, guid: afa1ad10b570ee04eb5048f8a809350d, type: 2}
+  - {fileID: 114894474049422940, guid: cb3301161a9810a488ed41477c58df31, type: 2}
 --- !u!1 &1312859956
 GameObject:
   m_ObjectHideFlags: 0

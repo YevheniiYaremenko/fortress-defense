@@ -11,6 +11,21 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1518355506089672}
   m_IsPrefabParent: 1
+--- !u!1 &1165801377135998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4461815413089252}
+  m_Layer: 0
+  m_Name: ShotPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1518355506089672
 GameObject:
   m_ObjectHideFlags: 0
@@ -19,7 +34,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4811937911260358}
-  - component: {fileID: 114432565118128108}
+  - component: {fileID: 114894474049422940}
   - component: {fileID: 212686908978978172}
   - component: {fileID: 95330288765727202}
   m_Layer: 0
@@ -29,6 +44,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4461815413089252
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165801377135998}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -1.32, y: 1.3289999, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4811937911260358}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!4 &4811937911260358
 Transform:
   m_ObjectHideFlags: 1
@@ -38,7 +66,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.65, y: 0.65, z: 0.65}
-  m_Children: []
+  m_Children:
+  - {fileID: 4461815413089252}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -60,7 +89,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114432565118128108
+--- !u!114 &114894474049422940
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -68,11 +97,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1518355506089672}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d768cc9d394ee4c53bdb96dbe88a59ba, type: 3}
+  m_Script: {fileID: 11500000, guid: 877f3fcc30ba4466a9782d5af3dcc85a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 463b5009f06dba243a7234307ac2af80, type: 3}
   price: 800
+  shootingRange: 12
+  damage: 20
+  shotPoint: {fileID: 4461815413089252}
+  arrowPrefab: {fileID: 1266594975711322, guid: 5ff1b0e182b124c4ba875a4759d87414,
+    type: 2}
+  arrowSpeed: 20
 --- !u!212 &212686908978978172
 SpriteRenderer:
   m_ObjectHideFlags: 1
